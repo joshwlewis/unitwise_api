@@ -1,6 +1,10 @@
 require "bundler"
 Bundler.require
 
+before do
+  content_type 'application/json'
+end
+
 get '/' do
   "It's running. I need to put some kind of instructions here."
 end
@@ -8,7 +12,7 @@ end
 get '/atoms.json' do
   Unitwise::Atom.all.map do |a|
     { keys: [ a.names, a.primary_code, a.secondary_code, a.symbol].flatten.compact.uniq,
-      classification: a.classification, metric: a.metric, dim: a.dim }
+      dim: a.dim, property: a.property, classification: a.classification }
   end.to_json
 end
 
