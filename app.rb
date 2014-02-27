@@ -1,10 +1,21 @@
-require "bundler"
+require 'rubygems'
+require 'bundler'
 Bundler.require
 
-before do
-  content_type 'application/json'
+$: << File.expand_path('../app', __FILE__)
+
+require 'models/simpleton'
+
+module UnitApi
+  class App < Sinatra::Base
+    before do
+      content_type 'application/json'
+    end
+    
+    get '/search.json' do
+      simpletons = UnitApi::Simpleton.search(params[:term])
+      simpletons.map(&:search_strings).to_json
+    end
+  end
 end
 
-get '/' do
-  "It's running. I need to put some kind of instructions here."
-end
