@@ -56,8 +56,8 @@ module UnitApi
       end
     end
 
-    def to_json
-      search_strings
+    def to_json(*a)
+      search_strings.to_json(*a)
     end
   end
 end
