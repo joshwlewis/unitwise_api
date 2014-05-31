@@ -1,10 +1,9 @@
 require 'rubygems'
 require 'bundler'
-Bundler.require
+ENV['RACK_ENV'] ||= 'development'
+Bundler.require(:default, ENV['RACK_ENV'])
 
 $: << File.expand_path('../app', __FILE__)
-
-require 'models/simpleton'
 
 module UnitApi
   class App < Sinatra::Base
@@ -20,25 +19,28 @@ module UnitApi
     end
 
     get '/units' do
-      UnitApi::Simpleton.search(params[:search]).to_json
+      Unitwise.search(params[:q]).map do |u|
+        %i{primary_code secondary_code names slugs symbol}.reduce([]) do |arr,attr|
+          arr + Array(u.send(attr))
+        end
+      end.to_json
     end
 
-    put '/conversions' do
+    post '/conversions' do
       json = request_json
-      source = Unitwise::Measurement.new(json['source']['value'], json['source']['unit'])
-      target = Unitwise::Unit.new(json['target']['unit'])
-      converted = source.convert(target)
-      { source: source, target: converted }.to_json
+      @source = Unitwise::Measurement.new(json['source']['value'], json['source']['unit'])
+      @target = Unitwise::Unit.new(json['target']['unit'])
+      @result = @source.convert_to(@target)
+      jbuilder :conversion
     end
 
-    put '/calculations' do
-      json = request_json
-      left = Unitwise(json['left']['value'], params['left']['unit'])
-      right = Unitwise(params['left']['value'], params['right']['unit'])
-      operator = %w{+ - * /}.find(json['operator'])
-      left.send(operator, right).to_json
+    post '/calculations' do
+      json     = request_json
+      @left    = Unitwise(json['left']['value'], json['left']['unit'])
+      @right   = Unitwise(json['right']['value'], json['right']['unit'])
+      @operator = %w{+ - * /}.find{ |o| o == json['operator'] }
+      @result  = @left.send(@operator, @right)
+      jbuilder :calculation
     end
-
   end
 end
-
