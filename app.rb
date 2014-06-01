@@ -29,7 +29,7 @@ module UnitApi
     post '/conversions.json' do
       json = request_json
       @source = Unitwise::Measurement.new(json['source']['value'], json['source']['unit'])
-      @target = Unitwise::Unit.new(json['target']['unit'])
+      @target = Unitwise::Unit.new(json['target'])
       @result = @source.convert_to(@target)
       jbuilder :conversion
     end

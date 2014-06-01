@@ -15,7 +15,7 @@ class AppTest < Minitest::Test
 
   def test_conversions
     post '/conversions.json', { source: { value: 4, unit: 'yard' },
-                                target: { unit: 'm' } }.to_json
+                                target: 'm' }.to_json
     assert last_response.ok?
     assert_equal 'm',                body['result']['unit']
     assert_equal 3.6576000000000004, body['result']['value']
