@@ -18,7 +18,7 @@ module UnitApi
       end
     end
 
-    get '/units' do
+    get '/units.json' do
       Unitwise.search(params[:q]).map do |u|
         %i{primary_code secondary_code names slugs symbol}.reduce([]) do |arr,attr|
           arr + Array(u.send(attr))
@@ -26,7 +26,7 @@ module UnitApi
       end.to_json
     end
 
-    post '/conversions' do
+    post '/conversions.json' do
       json = request_json
       @source = Unitwise::Measurement.new(json['source']['value'], json['source']['unit'])
       @target = Unitwise::Unit.new(json['target']['unit'])
@@ -34,7 +34,7 @@ module UnitApi
       jbuilder :conversion
     end
 
-    post '/calculations' do
+    post '/calculations.json' do
       json     = request_json
       @left    = Unitwise(json['left']['value'], json['left']['unit'])
       @right   = Unitwise(json['right']['value'], json['right']['unit'])
