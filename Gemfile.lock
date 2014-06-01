@@ -11,11 +11,11 @@ GEM
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     json (1.8.1)
-    liner (0.2.2)
+    liner (0.2.4)
     method_source (0.8.2)
     minitest (5.0.8)
     multi_json (1.10.1)
-    parslet (1.6.0)
+    parslet (1.6.1)
       blankslate (~> 2.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -37,10 +37,10 @@ GEM
     tilt-jbuilder (0.6.0)
       jbuilder
       tilt (<= 1.5.0)
-    unitwise (0.6.0)
-      liner (~> 0.2)
+    unitwise (0.6.1)
+      liner (~> 0.2.4)
       parslet (~> 1.5)
-      signed_multiset (~> 0.2)
+      signed_multiset (~> 0.2.0)
 
 PLATFORMS
   ruby
