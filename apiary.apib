@@ -1,0 +1,45 @@
+FORMAT: 1A
+
+# Unitwise API
+
+Unitwise is a RESTful JSON API for converting and performing calculations on physical quantities or units of measure.
+
+# Available Units [/units.json?q={query}]
+
+## Search [GET]
+
++ Parameters
+    + query (required, string) ... The term to search for.
++ Response 200 (application/json)
+    + Body
+    
+            [["km","kilometer"]]
+
+
+# Conversions [/conversions.json]
+
+## Create [POST]
++ Request (application/json)
+
+        {
+            "source": {
+                "value": 3,
+                "unit": "foot"
+            },
+            "target": "yard"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "source": {
+                "value": 3,
+                "unit": "foot"
+            },
+            "target": "yard"
+            "result": {
+                "value": 1,
+                "unit": "yard"
+            }
+        }
+
