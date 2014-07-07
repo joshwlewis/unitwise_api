@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 
 gem 'sinatra',        '~> 1.4.4'
-gem 'unitwise',       '~> 0.6'
+gem 'unitwise',       '~> 0.8'
 gem 'json',           '~> 1.8.0'
 gem 'tilt-jbuilder',  '~> 0.6.0', require: 'sinatra/jbuilder'
 

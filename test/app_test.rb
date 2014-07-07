@@ -14,11 +14,12 @@ class AppTest < Minitest::Test
   end
 
   def test_conversions
-    post '/conversions.json', { source: { value: 4, unit: 'yard' },
-                                target: 'm' }.to_json
+    post '/calculations.json', { left: { value: 4, unit: 'yard' },
+                                 right: { unit: 'm' },
+                                 operator: 'convert_to' }.to_json
     assert last_response.ok?
-    assert_equal 'm',                body['result']['unit']
-    assert_equal 3.6576000000000004, body['result']['value']
+    assert_equal 'm',   body['result']['unit']
+    assert_equal 3.6576, body['result']['value']
   end
 
   def test_calculations
@@ -26,7 +27,7 @@ class AppTest < Minitest::Test
                                  right: { value: 10, unit: 'km'  },
                                  operator: '+' }.to_json
     assert_equal body['result']['unit'], 'mile'
-    assert_equal body['result']['value'], 7.213699494949496
+    assert_equal body['result']['value'], 7.213699494949495
   end
 
 

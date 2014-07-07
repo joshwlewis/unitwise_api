@@ -4,6 +4,7 @@ GEM
     activesupport (3.2.18)
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
+    bigdecimal (1.2.5)
     blankslate (2.1.2.4)
     coderay (1.1.0)
     i18n (0.6.9)
@@ -40,7 +41,8 @@ GEM
     tilt-jbuilder (0.6.0)
       jbuilder
       tilt (<= 1.5.0)
-    unitwise (0.6.2)
+    unitwise (0.8.1)
+      bigdecimal (~> 1.2)
       liner (~> 0.2)
       memoizable (~> 0.4)
       parslet (~> 1.5)
@@ -57,4 +59,4 @@ DEPENDENCIES
   rake (~> 10.1.0)
   sinatra (~> 1.4.4)
   tilt-jbuilder (~> 0.6.0)
-  unitwise (~> 0.6)
+  unitwise (~> 0.8)

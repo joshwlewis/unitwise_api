@@ -1,16 +1,13 @@
 json.left do
-  json.name  @left.to_s
-  json.value @left.value
+  json.value @left.to_f
   json.unit  @left.unit.to_s
 end
 json.right do
-  json.name  @right.to_s
-  json.value @right.value
+  json.value @right.to_f
   json.unit  @right.unit.to_s
 end
 json.operator @operator.to_s
 json.result do
-  json.name  @result.to_s
-  json.value @result.value
+  json.value @result.to_f
   json.unit  @result.unit.to_s
 end

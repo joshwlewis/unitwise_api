@@ -26,19 +26,11 @@ module UnitApi
       end.to_json
     end
 
-    post '/conversions.json' do
-      json = request_json
-      @source = Unitwise::Measurement.new(json['source']['value'], json['source']['unit'])
-      @target = Unitwise::Unit.new(json['target'])
-      @result = @source.convert_to(@target)
-      jbuilder :conversion
-    end
-
     post '/calculations.json' do
       json     = request_json
-      @left    = Unitwise(json['left']['value'], json['left']['unit'])
-      @right   = Unitwise(json['right']['value'], json['right']['unit'])
-      @operator = %w{+ - * /}.find{ |o| o == json['operator'] }
+      @operator = %w{convert_to + - * /}.find{ |o| o == json['operator'] }
+      @left    = Unitwise(json['left']['value'] || 1, json['left']['unit'])
+      @right   = Unitwise(json['right']['value'] || 1, json['right']['unit'])
       @result  = @left.send(@operator, @right)
       jbuilder :calculation
     end
