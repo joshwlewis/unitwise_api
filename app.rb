@@ -18,7 +18,7 @@ module UnitApi
       end
     end
 
-    get '/units.json' do
+    get '/units', provides: 'json' do
       Unitwise.search(params[:q]).map do |u|
         %i{primary_code secondary_code names slugs symbol}.reduce([]) do |arr,attr|
           arr + Array(u.send(attr))
@@ -26,7 +26,7 @@ module UnitApi
       end.to_json
     end
 
-    post '/calculations.json' do
+    post '/calculations', provides: 'json' do
       json     = request_json
       @operator = %w{convert_to + - * /}.find{ |o| o == json['operator'] }
       @left    = Unitwise(json['left']['value'] || 1, json['left']['unit'])
