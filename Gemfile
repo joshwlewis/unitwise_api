@@ -2,10 +2,9 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 
 gem 'sinatra',        '~> 1.4.4'
-gem 'unitwise',       '~> 0.8'
+gem 'unitwise',       '~> 0.9'
 gem 'json',           '~> 1.8.0'
 gem 'rack-cors',      '~> 0.2.9'
-gem 'tilt-jbuilder',  '~> 0.6.0', require: 'sinatra/jbuilder'
 
 group :development, :test do
   gem 'pry',          '~> 0.9.12'

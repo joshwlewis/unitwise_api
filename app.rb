@@ -26,20 +26,35 @@ module UnitApi
     end
 
     get '/units', provides: 'json' do
-      Unitwise.search(params[:q] || '').map do |u|
-        %i{primary_code secondary_code names slugs symbol}.reduce([]) do |arr,attr|
-          arr + Array(u.send(attr))
-        end
-      end.to_json
+      units = Unitwise.search(params[:q] || '')
+      units.map { |u| unit_attributes(u) }.to_json
     end
 
     post '/calculations', provides: 'json' do
       json     = request_json
-      @operator = %w{convert_to + - * /}.find{ |o| o == json['operator'] }
-      @left    = Unitwise(json['left']['value'] || 1, json['left']['unit'])
-      @right   = Unitwise(json['right']['value'] || 1, json['right']['unit'])
-      @result  = @left.send(@operator, @right)
-      jbuilder :calculation
+      calc = {}
+      calc[:operator] = %w{convert_to + - * /}.find{ |o| o == json['operator'] }
+      calc[:left]     = Unitwise(json['left']['value'] || 1, json['left']['unit']['code'])
+      calc[:right]    = Unitwise(json['right']['value'] || 1, json['right']['unit']['code'])
+      calc[:result]   = calc[:left].send(calc[:operator], calc[:right])
+      %i{left right result}.reduce({}) do |hash, key|
+        hash[key]         = unit_attributes(calc[key])
+        hash[key][:value] = calc[key].simplified_value
+        hash[key][:unit]  = unit_attributes(calc[key].unit)
+        hash
+      end.merge(operator: calc[:operator]).to_json
+    end
+
+    helpers do
+      def unit_attributes(unit)
+        {
+          code: unit.to_s(:primary_code),
+          name: unit.to_s(:names),
+          aliases: %i{primary_code secondary_code symbol}.map do |mode|
+            unit.to_s(mode)
+          end.compact.uniq
+        }
+      end
     end
   end
 end
