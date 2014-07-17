@@ -48,11 +48,10 @@ module UnitApi
     helpers do
       def unit_attributes(unit)
         {
-          code: unit.to_s(:primary_code),
-          name: unit.to_s(:names),
-          aliases: %i{primary_code secondary_code symbol}.map do |mode|
-            unit.to_s(mode)
-          end.compact.uniq
+          name:           unit.to_s(:names),
+          code:           unit.to_s(:primary_code),
+          symbol:         unit.to_s(:symbol),
+          dim:            unit.dim
         }
       end
     end

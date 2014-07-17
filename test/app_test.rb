@@ -18,8 +18,8 @@ class AppTest < Minitest::Test
                             right: { unit: { code: 'm'} },
                             operator: 'convert_to' }.to_json
     assert last_response.ok?
-    assert_equal 'm',   body['result']['unit']['code']
-    assert_equal 3.6576, body['result']['value']
+    assert_equal body['result']['unit']['code'], 'm'
+    assert_equal body['result']['value'],        3.6576
   end
 
   def test_calculations
@@ -27,7 +27,7 @@ class AppTest < Minitest::Test
                             right: { value: 1, unit: { code: 'foot' } },
                             operator: '+' }.to_json
     assert_equal body['result']['unit']['name'], 'inch'
-    assert_equal body['result']['value'], 24
+    assert_equal body['result']['value'],        24
   end
 
 
