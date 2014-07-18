@@ -31,9 +31,8 @@ module UnitApi
     end
 
     post '/calculations', provides: 'json' do
-      json     = request_json
-      @operator = %w{convert_to + - * /}.find{ |o| o == json['operator'] }
-      @left     = build_measurement('right')
+      @operator = %w{convert_to + - * /}.find{ |o| o == request_json['operator'] }
+      @left     = build_measurement('left')
       @right    = build_measurement('right')
       @result   = @left.send(@operator, @right)
       %i{left right result}.reduce({}) do |hash, key|
@@ -51,11 +50,11 @@ module UnitApi
       end
 
       def get_value(key)
-        BigDecimal((json[key]['value'] || 1).to_s)
+        BigDecimal((request_json[key]['value'] || 1).to_s)
       end
 
       def get_unit_code(key)
-        json[key]['unit']['code']
+        request_json[key]['unit']['code']
       end
 
       def unit_attributes(unit)
