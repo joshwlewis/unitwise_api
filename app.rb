@@ -2,8 +2,8 @@ require 'rubygems'
 require 'bundler'
 ENV['RACK_ENV'] ||= 'development'
 Bundler.require(:default, ENV['RACK_ENV'])
-
 $: << File.expand_path('../app', __FILE__)
+$stdout.sync = true
 
 module UnitApi
   class App < Sinatra::Base
@@ -32,20 +32,32 @@ module UnitApi
 
     post '/calculations', provides: 'json' do
       json     = request_json
-      calc = {}
-      calc[:operator] = %w{convert_to + - * /}.find{ |o| o == json['operator'] }
-      calc[:left]     = Unitwise(json['left']['value'] || 1, json['left']['unit']['code'])
-      calc[:right]    = Unitwise(json['right']['value'] || 1, json['right']['unit']['code'])
-      calc[:result]   = calc[:left].send(calc[:operator], calc[:right])
+      @operator = %w{convert_to + - * /}.find{ |o| o == json['operator'] }
+      @left     = build_measurement('right')
+      @right    = build_measurement('right')
+      @result   = @left.send(@operator, @right)
       %i{left right result}.reduce({}) do |hash, key|
-        hash[key]         = unit_attributes(calc[key])
-        hash[key][:value] = calc[key].simplified_value
-        hash[key][:unit]  = unit_attributes(calc[key].unit)
+        measurement       = instance_variable_get("@#{key}")
+        hash[key]         = unit_attributes(measurement)
+        hash[key][:value] = measurement.simplified_value
+        hash[key][:unit]  = unit_attributes(measurement.unit)
         hash
-      end.merge(operator: calc[:operator]).to_json
+      end.merge(operator: @operator).to_json
     end
 
     helpers do
+      def build_measurement(key)
+        Unitwise(get_value(key), get_unit_code(key))
+      end
+
+      def get_value(key)
+        BigDecimal((json[key]['value'] || 1).to_s)
+      end
+
+      def get_unit_code(key)
+        json[key]['unit']['code']
+      end
+
       def unit_attributes(unit)
         {
           name:           unit.to_s(:names),
