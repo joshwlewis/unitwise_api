@@ -20,7 +20,7 @@ module UnitApi
 
     use Rack::Cors do
       allow do
-        origins(/localhost:\d+/, 'unitwise.org')
+        origins(/localhost:\d+/, /(\w+\.)?unitwise.org/, 'joshwlewis.github.io')
         resource('*', headers: :any, methods: [:get, :post])
       end
     end
