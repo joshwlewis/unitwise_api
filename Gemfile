@@ -2,9 +2,11 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 
 gem 'sinatra',        '~> 1.4.4'
-gem 'unitwise',       '~> 0.9'
+gem 'unitwise',       '~> 1.0'
 gem 'json',           '~> 1.8.0'
 gem 'rack-cors',      '~> 0.2.9'
+
+gem 'mina-puma', :require => false
 
 group :development, :test do
   gem 'pry',          '~> 0.9.12'
