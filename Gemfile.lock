@@ -1,17 +1,6 @@
-PATH
-  remote: ../unitwise
-  specs:
-    unitwise (1.0.0)
-      bigdecimal (~> 1.2)
-      liner (~> 0.2)
-      memoizable (~> 0.4)
-      parslet (~> 1.5)
-      signed_multiset (~> 0.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
-    bigdecimal (1.2.5)
     blankslate (2.1.2.4)
     coderay (1.1.0)
     json (1.8.1)
@@ -27,7 +16,7 @@ GEM
       puma
     minitest (5.0.8)
     open4 (1.3.4)
-    parslet (1.6.1)
+    parslet (1.5.0)
       blankslate (~> 2.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -50,6 +39,11 @@ GEM
     slop (3.6.0)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    unitwise (1.0.1)
+      liner (~> 0.2)
+      memoizable (~> 0.4)
+      parslet (~> 1.5.0)
+      signed_multiset (~> 0.2)
 
 PLATFORMS
   ruby
@@ -63,4 +57,4 @@ DEPENDENCIES
   rack-test (~> 0.6.2)
   rake (~> 10.1.0)
   sinatra (~> 1.4.4)
-  unitwise!
+  unitwise (~> 1.0)
