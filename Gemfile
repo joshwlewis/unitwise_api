@@ -6,7 +6,8 @@ gem 'unitwise',       '~> 1.0'
 gem 'json',           '~> 1.8.0'
 gem 'rack-cors',      '~> 0.2.9'
 
-gem 'mina-puma', :require => false
+gem 'puma',           '~> 2.9.0'
+gem 'mina-puma',      require: false
 
 group :development, :test do
   gem 'pry',          '~> 0.9.12'

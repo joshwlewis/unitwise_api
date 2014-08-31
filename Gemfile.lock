@@ -53,6 +53,7 @@ DEPENDENCIES
   mina-puma
   minitest (~> 5.0.6)
   pry (~> 0.9.12)
+  puma (~> 2.9.0)
   rack-cors (~> 0.2.9)
   rack-test (~> 0.6.2)
   rake (~> 10.1.0)
