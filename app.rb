@@ -35,7 +35,7 @@ module UnitApi
       @left     = build_measurement('left')
       @right    = build_measurement('right')
       @result   = @left.send(@operator, @right)
-      %i{left right result}.reduce({}) do |hash, key|
+      [:left, :right, :result].reduce({}) do |hash, key|
         measurement       = instance_variable_get("@#{key}")
         hash[key]         = unit_attributes(measurement)
         hash[key][:value] = measurement.simplified_value
