@@ -48,7 +48,7 @@ end
 desc 'Start puma'
 task start: :environment do
   queue! %[
-    cd #{deploy_to}/#{current_path} && bundle exec pumactl start
+    cd #{deploy_to}/#{current_path} && bundle exec pumactl -C ./config/puma/production.rb start
   ]
 end
 
