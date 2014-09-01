@@ -40,7 +40,7 @@ task :deploy => :environment do
     invoke :'bundle:install'
 
     to :launch do
-      invoke :'start'
+      invoke :'restart'
     end
   end
 end
