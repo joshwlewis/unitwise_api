@@ -7,7 +7,10 @@ gem 'json',           '~> 1.8.0'
 gem 'rack-cors',      '~> 0.2.9'
 
 gem 'puma',           '~> 2.9.0'
-gem 'mina-puma',      require: false
+
+group :development do
+  gem 'mina',         '~> 0.3.0'
+end
 
 group :development, :test do
   gem 'pry',          '~> 0.9.12'

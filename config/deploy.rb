@@ -1,6 +1,5 @@
 require 'mina/bundler'
 require 'mina/git'
-require 'mina/puma'
 
 set :domain, 'api.unitwise.org'
 set :deploy_to, '/var/www/api.unitwise.org'
@@ -36,14 +35,34 @@ end
 desc "Deploys the current version to the server."
 task :deploy => :environment do
   deploy do
-    # Put things that will set up an empty directory into a fully set-up
-    # instance of your project.
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
 
     to :launch do
-      invoke :'puma:phased_restart'
+      invoke :'start'
     end
   end
 end
+
+desc 'Start puma'
+task start: :environment do
+  queue! %[
+    cd #{deploy_to}/#{current_path} && bundle exec pumactl start
+  ]
+end
+
+desc 'Stop puma'
+task stop: :environment do
+  queue! %[
+    cd #{deploy_to}/#{current_path} && bundle exec pumactl stop
+  ]
+end
+
+desc 'Restart puma'
+task restart: :environment do
+  queue! %{
+    cd #{deploy_to}/#{current_path} && bundle exec pumactl phased-restart
+  }
+end
+
