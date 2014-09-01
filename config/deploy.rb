@@ -62,7 +62,7 @@ end
 desc 'Restart puma'
 task restart: :environment do
   queue! %{
-    cd #{deploy_to}/#{current_path} && bundle exec pumactl phased-restart
+    cd #{deploy_to}/#{current_path} && bundle exec pumactl -C ./config/puma/production.rb phased-restart
   }
 end
 
