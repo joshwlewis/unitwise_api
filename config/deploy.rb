@@ -45,24 +45,11 @@ task :deploy => :environment do
   end
 end
 
-desc 'Start puma'
-task start: :environment do
-  queue! %[
-    cd #{deploy_to}/#{current_path} && bundle exec pumactl -C ./config/puma/production.rb start
-  ]
+%w{halt restart phased-restart start stats status stop}.each do |cmd|
+  desc "puma #{cmd}"
+  task cmd => :environment do
+    queue! %[
+      cd #{deploy_to}/#{current_path} && bundle exec pumactl #{cmd}
+    ]
+  end
 end
-
-desc 'Stop puma'
-task stop: :environment do
-  queue! %[
-    cd #{deploy_to}/#{current_path} && bundle exec pumactl stop
-  ]
-end
-
-desc 'Restart puma'
-task restart: :environment do
-  queue! %{
-    cd #{deploy_to}/#{current_path} && bundle exec pumactl -C ./config/puma/production.rb phased-restart
-  }
-end
-
