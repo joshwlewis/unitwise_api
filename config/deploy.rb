@@ -1,10 +1,10 @@
 require 'mina/bundler'
 require 'mina/git'
 
-set :domain, 'api.unitwise.org'
-set :deploy_to, '/var/www/api.unitwise.org'
+set :domain,     'api.unitwise.org'
+set :deploy_to,  '/var/www/api.unitwise.org'
 set :repository, 'git://github.com/joshwlewis/unitwise_api'
-set :branch, 'master'
+set :branch,     'master'
 
 set :shared_paths, ['log']
 
@@ -45,11 +45,17 @@ task :deploy => :environment do
   end
 end
 
-%w{halt restart phased-restart start stats status stop}.each do |cmd|
+desc "Puma start"
+task start: :environment do
+  queue! %[
+    cd #{deploy_to}/#{current_path} && bundle exec puma
+  ]
+end
+%w{halt restart phased-restart stats status stop}.each do |cmd|
   desc "Puma #{cmd}"
   task cmd => :environment do
     queue! %[
-      cd #{deploy_to}/#{current_path} && bundle exec pumactl #{cmd}
+      cd #{deploy_to}/#{current_path} && bundle exec pumactl  -F #{deploy_to}/#{current_path}/config/puma/production.rb #{ cmd }
     ]
   end
 end
