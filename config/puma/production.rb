@@ -1,6 +1,6 @@
 #!/usr/bin/env puma
 tag                  'api.unitwise.org'
-path                 '/var/www/api.unitwise.org/current'
+directory            '/var/www/api.unitwise.org/current'
 pidfile              '/var/www/api.unitwise.org/shared/tmp/pids/puma.pid'
 state_path           '/var/www/api.unitwise.org/shared/tmp/sockets/puma.state'
 activate_control_app 'unix:///var/www/api.unitwise.org/shared/tmp/sockets/pumactl.sock'
