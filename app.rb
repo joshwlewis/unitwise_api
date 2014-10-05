@@ -31,7 +31,8 @@ module UnitApi
     get '/units', provides: 'json' do
       query = (params[:q] || '').strip
       Suggestor.seed(query) if Unitwise.valid?(query)
-      units = Suggestor.suggest(query).map do |s|
+      count = query.empty? ? 50 : 10
+      units = Suggestor.suggest(query, count).map do |s|
         Unitwise::Unit.new(s)
       end.uniq
       units.map { |u| unit_attributes(u) }.to_json
