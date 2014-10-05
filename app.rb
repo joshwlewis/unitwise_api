@@ -40,7 +40,7 @@ module UnitApi
 
     post '/units', provides: 'json' do
       unit = Unitwise::Unit.new(request_json['unit'])
-      %i{names primary_code symbol}.each do |a|
+      %w{names primary_code symbol}.each do |a|
         Suggestor.add unit.to_s(a)
       end
       unit
