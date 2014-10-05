@@ -7,10 +7,21 @@ class AppTest < Minitest::Test
     UnitApi::App
   end
 
-  def test_units
+  def test_get_units_no_query
+    get '/units'
+    assert last_response.ok?
+    assert_kind_of String, last_response.body
+  end
+
+  def test_get_units_query
     get '/units', q: 'mm'
     assert last_response.ok?
     assert_includes last_response.body, 'millimeter'
+  end
+
+  def test_post_units
+    post '/units', { unit: 'kilometer' }.to_json
+    assert last_response.ok?
   end
 
   def test_conversions

@@ -3,6 +3,7 @@ ruby '2.1.0'
 
 gem 'sinatra',        '~> 1.4.4'
 gem 'unitwise',       '~> 1.0'
+gem 'mindtrick',      '~> 0.0'
 gem 'json',           '~> 1.8.0'
 gem 'rack-cors',      '~> 0.2.9'
 
