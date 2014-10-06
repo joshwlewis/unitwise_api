@@ -8,13 +8,6 @@ $stdout.sync = true
 # Setup the search suggestion engine
 Suggestor = Mindtrick::Set.new(prefix: "units-#{ ENV['RACK_ENV'] }")
 
-# Seed the suggestion engine with all known units.
-Unitwise.search('').each do |u|
-  %w{names primary_code symbol}.each do |a|
-    Suggestor.seed u.to_s(a)
-  end
-end
-
 module UnitApi
   class App < Sinatra::Base
     before do
@@ -38,12 +31,16 @@ module UnitApi
       units.map { |u| unit_attributes(u) }.to_json
     end
 
-    post '/units', provides: 'json' do
-      unit = Unitwise::Unit.new(request_json['unit'])
-      %w{names primary_code symbol}.each do |a|
-        Suggestor.add unit.to_s(a)
+    get '/units/:code', provides: 'json' do |code|
+      if Unitwise.valid?(code)
+        unit = Unitwise::Unit.new(code)
+        %w{names primary_code symbol}.each do |a|
+          Suggestor.add unit.to_s(a)
+        end
+        unit_attributes(unit).to_json
+      else
+        status 404
       end
-      unit
     end
 
     post '/calculations', provides: 'json' do
