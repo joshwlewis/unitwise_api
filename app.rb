@@ -25,8 +25,9 @@ module UnitApi
       query = (params[:q] || '').strip
       Suggestor.seed(query) if Unitwise.valid?(query)
       count = query.empty? ? 50 : 10
-      units = Suggestor.suggest(query, count).map do |s|
-        Unitwise::Unit.new(s)
+      units = Suggestor.suggest(query, count).reduce([]) do |arr,s|
+        arr << Unitwise::Unit.new(s) if Unitwise.valid?(s)
+        arr
       end.uniq
       units.map { |u| unit_attributes(u) }.to_json
     end
