@@ -1,17 +1,13 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+ruby '2.2.0'
 
 gem 'sinatra',        '~> 1.4.4'
-gem 'unitwise',       '~> 1.0'
+gem 'unitwise',       github: 'joshwlewis/unitwise'
 gem 'mindtrick',      '~> 0.0'
 gem 'json',           '~> 1.8.0'
 gem 'rack-cors',      '~> 0.2.9'
 
 gem 'puma',           '~> 2.9.0'
-
-group :development do
-  gem 'mina',         '~> 0.3.0'
-end
 
 group :development, :test do
   gem 'pry',          '~> 0.9.12'
