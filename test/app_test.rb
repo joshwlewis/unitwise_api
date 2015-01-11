@@ -30,8 +30,8 @@ class AppTest < Minitest::Test
                             right: { unit: { code: 'm'} },
                             operator: 'convert_to' }.to_json
     assert last_response.ok?
-    assert_equal 'm',                body['result']['unit']['code']
-    assert_equal 3.6576000000000004, body['result']['value']
+    assert_equal 'm',    body['result']['unit']['code']
+    assert_equal 3.6576, body['result']['value']
   end
 
   def test_calculations
