@@ -15,6 +15,7 @@ GEM
     mindtrick (0.0.5)
       redis (~> 3.0)
     minitest (5.0.8)
+    mock_redis (0.17.3)
     parslet (1.5.0)
       blankslate (~> 2.0)
     pry (0.9.12.6)
@@ -54,6 +55,7 @@ DEPENDENCIES
   json (~> 1.8.0)
   mindtrick (~> 0.0)
   minitest (~> 5.0.6)
+  mock_redis (~> 0.17.3)
   pry (~> 0.9.12)
   puma (~> 2.9.0)
   rack-cors (~> 0.2.9)
@@ -61,3 +63,9 @@ DEPENDENCIES
   rake (~> 10.1.0)
   sinatra (~> 1.4.4)
   unitwise (~> 1.0)
+
+RUBY VERSION
+   ruby 2.2.0p0
+
+BUNDLED WITH
+   1.15.0
