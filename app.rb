@@ -5,8 +5,12 @@ Bundler.require(:default, ENV['RACK_ENV'])
 $: << File.expand_path('../app', __FILE__)
 $stdout.sync = true
 
+redis_class = ENV['RACK_ENV'] == 'test' ? MockRedis : Redis
+redis_args = ENV['REDIS_URL'] ? { url: ENV['REDIS_URL'] } : {}
+redis = redis_class.new(redis_args)
+
 # Setup the search suggestion engine
-Suggestor = Mindtrick::Set.new(prefix: "units-#{ ENV['RACK_ENV'] }")
+Suggestor = Mindtrick::Set.new(prefix: "units-#{ ENV['RACK_ENV'] }", redis: redis)
 
 module UnitApi
   class App < Sinatra::Base
