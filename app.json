@@ -1,6 +1,7 @@
 {
   "name": "Unitwise API",
   "description": "A Rest JSON API for unit conversions",
+  "addons": ["heroku-redis"],
   "scripts": {
     "test": "bundle exec rake"
   }
