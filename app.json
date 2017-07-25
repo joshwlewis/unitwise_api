@@ -2,7 +2,12 @@
   "name": "Unitwise API",
   "description": "A Rest JSON API for unit conversions",
   "addons": ["heroku-redis"],
-  "scripts": {
-    "test": "bundle exec rake"
-  }
+  "buildpacks": [{ url: "heroku/ruby" }],
+  "environments": {
+    "test": {
+      "addons": [],
+      "scripts": {
+        "test": "bundle exec rake"
+      }
+   }
 }
