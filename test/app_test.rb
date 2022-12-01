@@ -22,7 +22,7 @@ class AppTest < Minitest::Test
   def test_units_show
     get '/units/volt'
     assert last_response.ok?
-    assert_includes last_response.body, 'Volt'
+    assert_includes last_response.body, 'volt'
   end
 
   def test_conversions
@@ -31,7 +31,7 @@ class AppTest < Minitest::Test
                             operator: 'convert_to' }.to_json
     assert last_response.ok?
     assert_equal 'm',    body['result']['unit']['code']
-    assert_equal 3.6576, body['result']['value']
+    assert_equal Rational(2286,625), body['result']['value']
   end
 
   def test_calculations

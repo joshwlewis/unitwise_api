@@ -56,7 +56,7 @@ module UnitApi
       [:left, :right, :result].reduce({}) do |hash, key|
         measurement       = instance_variable_get("@#{key}")
         hash[key]         = unit_attributes(measurement)
-        hash[key][:value] = measurement.simplified_value
+        hash[key][:value] = measurement.simplified_value.to_f
         hash[key][:unit]  = unit_attributes(measurement.unit)
         hash
       end.merge(operator: @operator).to_json
